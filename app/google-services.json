@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "871932062628",
+    "firebase_url": "https://navitcuk.firebaseio.com",
+    "project_id": "navitcuk",
+    "storage_bucket": "navitcuk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871932062628:android:2c2e204eed00793f37af31",
+        "android_client_info": {
+          "package_name": "com.example.navitruck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871932062628-ur36c5pg1213n92re8fhgfivdgkackqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGI-edkkueAHFOGu64MGKFBWsp_7nrmJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871932062628-ur36c5pg1213n92re8fhgfivdgkackqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
