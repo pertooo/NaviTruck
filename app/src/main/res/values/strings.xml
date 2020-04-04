@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">NaviTruck</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="send">Send</string>
+
+
+    <string name="truck_status_title">Select Status</string>
+
+    <string-array name="truck_status">
+        <item>მივდივარ დასატვირთად</item>
+        <item>ველოდები დატვირთვას</item>
+        <item>დატვირთვა</item>
+        <item>გზაზე</item>
+        <item>ველოდები დაცლას</item>
+        <item>დაცლა</item>
+        <item>დასრულება</item>
+    </string-array>
+
+
+    <string-array name="driver_status">
+        <item>Off The Service</item>
+        <item>Available</item>
+        <item>Employed</item>
+    </string-array>
+
+
+    <string-array name="wish_task_type">
+        <item>Any Distance</item>
+        <item>Short Distance</item>
+        <item>Long Distance</item>
+    </string-array>
+
+    <string-array name="driver_status_geo">
+        <item>არ ვმუშაობ</item>
+        <item>ვეძებ ტვირთს</item>
+        <item>დასაქმებული</item>
+    </string-array>
+
+
+    <string-array name="wish_task_type_geo">
+        <item>ნებისმიერ მანძილზე</item>
+        <item>მოკლე მანძილზე</item>
+        <item>გრძელ მანძილზე</item>
+    </string-array>
+
+
+</resources>

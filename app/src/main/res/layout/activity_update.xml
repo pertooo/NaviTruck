@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="25dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/spinner_status"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/truck_status"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_spinner"
+            android:prompt="@string/truck_status_title" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/abc"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textSize="22sp"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:background="@drawable/rounded_edittext"
+                android:text="დატვირთვა დაიწყო 13:22 ზე"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/asd"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textSize="22sp"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:background="@drawable/rounded_edittext"
+                android:text="მიმდინარეობს 2სთ, 46წთ"
+                />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id ="@+id/minus_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="add img"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_rectangle_plus_photo"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="top"
+                android:hint="Enter note"
+                android:inputType="textCapSentences|textMultiLine"
+                android:lines="4"
+                android:textColorHint="@color/gray"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

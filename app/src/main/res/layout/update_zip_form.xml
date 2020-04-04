@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTrnsparentBackground"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="25dp">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Spinner
+                android:id="@+id/spinner_status"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:entries="@array/truck_status"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_spinner"
+                android:prompt="@string/truck_status_title" />
+
+            <EditText
+                android:id="@+id/noteEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Note"
+                android:layout_margin="5dp"
+                android:textSize="24sp"
+                android:textColorHint="@color/colorHint"
+                android:textColor="@color/colorText"
+                android:inputType="textCapSentences|textMultiLine"
+                android:background="@drawable/rounded_edittext"
+                android:maxLength="2000"
+                android:gravity="center"
+                android:maxLines="4" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/zipCode"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="30sp"
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_edittext"
+                    >
+
+                </TextView>
+
+                <Button
+                    android:id="@+id/getZipBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:text="Get Zip" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonLoadPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:text="Load Pictures" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/send"
+                    android:text="@string/send"
+                    android:textAllCaps="true"
+                    android:textSize="30sp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/rounded_button"
+                    android:textColor="@color/colorHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
