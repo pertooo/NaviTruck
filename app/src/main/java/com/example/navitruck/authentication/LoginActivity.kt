@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
 import com.example.navitruck.R
 import com.example.navitruck.screens.main.MainActivity
+import com.example.navitruck.screens.task.NotifySMSReceived
 import com.example.navitruck.screens.update.UpdatedataFormActivity
 
 /**
@@ -16,6 +17,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
+//        if(intent.extras != null){
+//            val intent = Intent(this, NotifySMSReceived::class.java)
+//            startActivity(intent)
+//        }
 
         // get reference to all views
         var et_user_name = findViewById(R.id.et_user_name) as EditText

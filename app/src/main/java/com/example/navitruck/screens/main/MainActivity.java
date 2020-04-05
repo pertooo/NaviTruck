@@ -47,22 +47,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        btn_subscribe = (Button) findViewById(R.id.btn_subscribe);
-        btn_unsubscribe = (Button) findViewById(R.id.btn_unsubscribe);
-
-        btn_subscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
-            }
-        });
-
-        btn_unsubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(TOPIC);
-            }
-        });
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
 
         initViews();
         setAdapter();
