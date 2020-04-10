@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
     private Button btn_subscribe;
     private Button btn_unsubscribe;
 
-    private final String TOPIC = "JavaSampleApproach";
+    private final String TOPIC = "11214";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

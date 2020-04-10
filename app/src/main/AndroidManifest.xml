@@ -47,7 +47,7 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name=".authentication.LoginActivity"
+            android:name=".screens.login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
