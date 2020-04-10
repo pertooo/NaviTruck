@@ -1,7 +1,9 @@
 package com.example.navitruck.screens.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
     private Context context;
+    private Activity activity;
 
     private EditText usernameEdit;
     private EditText passwordEdit;
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         setContentView(view);
 
         context = this;
+        activity = this;
         initViews(view);
         setListeners();
 
@@ -73,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
             userDto.setUsername(usernameEdit.getText().toString());
             userDto.setPassword(passwordEdit.getText().toString());
 
-            AuthenticateRestClient client = new AuthenticateRestClient();
+            AuthenticateRestClient client = new AuthenticateRestClient(activity);
             client.authenticate(userDto, this);
         });
 
@@ -101,6 +105,14 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         dismissDialog();
 
         String token = response.headers().get("Authorization");
+
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.token), token);
+        editor.commit();
+
+
+        Log.e("onResponse token - ", token);
 
         Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
