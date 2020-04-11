@@ -64,7 +64,7 @@
         </activity>
 
         <activity
-            android:name=".screens.task.NotifySMSReceived"
+            android:name=".screens.task.NotifyTaskReceived"
             android:parentActivityName=".screens.main.MainActivity"
             android:launchMode="singleTask"
             android:taskAffinity=""

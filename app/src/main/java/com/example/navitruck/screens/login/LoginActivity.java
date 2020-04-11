@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,25 +14,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.navitruck.R;
+import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.LoginCallBack;
-import com.example.navitruck.dto.AbstractDTO;
 import com.example.navitruck.dto.UserDto;
-import com.example.navitruck.network.AuthenticateClient;
 import com.example.navitruck.network.AuthenticateRestClient;
-import com.example.navitruck.network.RestClient;
 import com.example.navitruck.screens.dialog.DialogFragment;
 import com.example.navitruck.screens.main.MainActivity;
-
-import java.util.List;
+import com.example.navitruck.screens.task.NotifyTaskReceived;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
-    private Context context;
     private Activity activity;
 
     private EditText usernameEdit;
@@ -45,21 +39,33 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
     DialogFragment dialog;
 
+    private  SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+
+    private final String TOPIC = "11214";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View view = getLayoutInflater().inflate(R.layout.activity_login, null);
         setContentView(view);
 
-        context = this;
-        activity = this;
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+
         initViews(view);
+        setSavedData();
+        checkloggedIn();
         setListeners();
 
 
     }
 
     private void initViews(View view){
+        activity = this;
+
+        sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
         usernameEdit = view.findViewById(R.id.et_user_name);
         passwordEdit = view.findViewById(R.id.et_password);
 
@@ -69,16 +75,60 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         dialog = new DialogFragment();
     }
 
+    private void checkloggedIn(){
+        startDialog();
+
+        boolean logged = sharedPref.getBoolean(activity.getString(R.string.logged_in), false);
+
+        if(logged){
+            Bundle bundle = getIntent().getExtras();
+            if(bundle!=null){
+                //Then new Task received. Open without authentication
+                Intent intent = new Intent(this, NotifyTaskReceived.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                dismissDialog();
+            }else{
+                //Then Login Automatically
+                login();
+            }
+
+
+        }else {
+            dismissDialog();
+        }
+    }
+
+    private void setSavedData(){
+        String username = sharedPref.getString(activity.getString(R.string.logged_user), "");
+        String password = sharedPref.getString(activity.getString(R.string.logged_pass), "");
+
+        usernameEdit.setText(username);
+        passwordEdit.setText(password);
+    }
+
+    private void login(){
+
+        String username = usernameEdit.getText().toString();
+        String pass = passwordEdit.getText().toString();
+
+        editor.putString(getString(R.string.logged_user), username);
+        editor.putString(getString(R.string.logged_pass), pass);
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(username);
+        userDto.setPassword(pass);
+
+        AuthenticateRestClient client = new AuthenticateRestClient();
+        client.authenticate(userDto, this);
+    }
+
     private void setListeners(){
         submitBtn.setOnClickListener(view -> {
             startDialog();
-
-            UserDto userDto = new UserDto();
-            userDto.setUsername(usernameEdit.getText().toString());
-            userDto.setPassword(passwordEdit.getText().toString());
-
-            AuthenticateRestClient client = new AuthenticateRestClient(activity);
-            client.authenticate(userDto, this);
+           login();
         });
 
         resetBtn.setOnClickListener(view -> {
@@ -104,18 +154,22 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         dismissDialog();
 
-        String token = response.headers().get("Authorization");
+        String token = response.headers().get(Constants.HEADER_STRING);
 
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.token), token);
-        editor.commit();
+        if(token!=null){
+
+            editor.putString(getString(R.string.token), token);
+            editor.putBoolean(getString(R.string.logged_in), true);
+
+            editor.commit();
+
+            Intent intent = new Intent(activity, MainActivity.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(LoginActivity.this, "Fuck", Toast.LENGTH_SHORT).show();
+        }
 
 
-        Log.e("onResponse token - ", token);
-
-        Intent intent = new Intent(context, MainActivity.class);
-        startActivity(intent);
     }
 
     @Override

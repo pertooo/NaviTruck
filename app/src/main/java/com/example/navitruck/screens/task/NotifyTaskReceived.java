@@ -10,19 +10,26 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.navitruck.R;
+import com.example.navitruck.dto.Task;
 
-public class NotifySMSReceived extends Activity
-{
-    private static final String LOG_TAG = "SMSReceiver";
-    public static final int NOTIFICATION_ID_RECEIVED = 0x1221;
-    static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
+public class NotifyTaskReceived extends Activity {
+
+    private static final String TAG = "NotifyTaskReceived";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_new_task);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            Task task = (Task) bundle.getSerializable("task");
+            Log.e(TAG , task.getAddressFrom());
+        }
+
 
     }
 

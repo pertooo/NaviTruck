@@ -1,0 +1,8 @@
+package com.example.navitruck.Utils;
+
+public class Constants {
+
+    public static String API_BASE_URL = "http://192.168.1.10:8080";
+    public static String HEADER_STRING = "Authorization";
+
+}

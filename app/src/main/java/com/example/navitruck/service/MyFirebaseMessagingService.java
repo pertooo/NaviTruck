@@ -8,21 +8,27 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
+import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.example.navitruck.screens.task.NotifySMSReceived;
+import com.example.navitruck.dto.Task;
+import com.example.navitruck.screens.login.LoginActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import com.example.navitruck.R;
 import com.example.navitruck.screens.main.MainActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -36,43 +42,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // [START_EXCLUDE]
-        // There are two types of messages data messages and notification messages. Data messages
-        // are handled
-        // here in onMessageReceived whether the app is in the foreground or background. Data
-        // messages are the type
-        // traditionally used with GCM. Notification messages are only received here in
-        // onMessageReceived when the app
-        // is in the foreground. When the app is in the background an automatically generated
-        // notification is displayed.
-        // When the user taps on the notification they are returned to the app. Messages
-        // containing both notification
-        // and data payloads are treated as notification messages. The Firebase console always
-        // sends notification
-        // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
-        // [END_EXCLUDE]
-
-        Intent intent = new Intent(this, NotifySMSReceived.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
 
 
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-   //     sendNotification(remoteMessage.getData().toString());
+
+        Map<String, String> map =  remoteMessage.getData();
+        JSONObject dataObj =new JSONObject(map);
+
+        //     sendNotification(remoteMessage.getData().toString());
 
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        if (dataObj != null) {
+            Log.d(TAG, "Message data payload: " + dataObj);
 
-            if (/* Check if data needs to be processed by long running job */ true) {
+            if (true) {
+                // Handle message within 10 seconds
+                handleNow(dataObj);
+            } else {
                 // For long-running tasks (10 seconds or more) use WorkManager.
                 scheduleJob();
-            } else {
-                // Handle message within 10 seconds
-                handleNow();
             }
 
         }
@@ -119,9 +107,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     /**
      * Handle time allotted to BroadcastReceivers.
+     * @param dataObj
      */
-    private void handleNow() {
+    private void handleNow(JSONObject dataObj) {
         Log.d(TAG, "Short lived task is done.");
+        Task task = null;
+        try{
+            task = new Task(dataObj.get("addressFrom").toString(), dataObj.get("addressFrom").toString());
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(this, LoginActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("task", (Serializable) task);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     /**

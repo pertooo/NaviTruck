@@ -111,7 +111,7 @@ public class UpdatedataFormActivity extends Activity {
 
         sendBtn.setOnClickListener(arg -> {
 
-            RestClient client = new RestClient();
+            RestClient client = new RestClient(activity);
             client.sendData(note.getText().toString(), zipText.getText().toString(), spinnerStatus.getSelectedItem().toString());
 
         });

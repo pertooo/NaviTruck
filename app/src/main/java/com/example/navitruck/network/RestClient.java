@@ -1,9 +1,17 @@
 package com.example.navitruck.network;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.navitruck.R;
+import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.AbstractDTO;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,13 +21,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
 
-    String API_BASE_URL = "http://192.168.1.11:8080";
+    private Activity activity;
 
-    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    public RestClient(Activity activity){
+        this.activity = activity;
+    }
+
+    OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+        @Override
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+
+            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+            String token = sharedPref.getString(activity.getString(R.string.token),"");
+
+            return chain.proceed(
+                    chain.request()
+                            .newBuilder()
+                            .addHeader(Constants.HEADER_STRING, token)
+                            .build());
+        }
+    });
 
     Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
+                    .baseUrl(Constants.API_BASE_URL)
                     .addConverterFactory(
                             GsonConverterFactory.create()
                     );

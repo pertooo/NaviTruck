@@ -5,7 +5,6 @@
 
 
     <string name="app_name">NaviTruck</string>
-    <string name="token" translatable="false">token</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -20,6 +19,16 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="send">Send</string>
+
+
+//Keys Start
+    <string name="token" translatable="false">token</string>
+    <string name="logged_in" translatable="false">logged_in</string>
+    <string name="logged_user" translatable="false">logged_user</string>
+    <string name="logged_pass" translatable="false">logged_pass</string>
+//Keys End
+
+
 
 
     <string name="truck_status_title">Select Status</string>

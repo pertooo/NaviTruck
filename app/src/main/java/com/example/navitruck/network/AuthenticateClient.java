@@ -12,11 +12,8 @@ import retrofit2.http.HTTP;
 
 public interface AuthenticateClient {
 
- @HTTP(method = "POST", path = "/api/signin", hasBody = true)
- Call<UserDto> authenticate(@Body UserDto userDto);
-
  @HTTP(method = "POST", path = "/login", hasBody = true)
- Call<ResponseBody> login(@Body UserDto userDto);
+ Call<ResponseBody> authenticate(@Body UserDto userDto);
 
 
 }
