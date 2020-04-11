@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,9 +56,16 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
         initViews(view);
         setSavedData();
-        checkloggedIn();
         setListeners();
 
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        checkloggedIn();
 
     }
 
@@ -78,14 +87,17 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
     private void checkloggedIn(){
         startDialog();
 
-        boolean logged = sharedPref.getBoolean(activity.getString(R.string.logged_in), false);
+        boolean logged = sharedPref.getBoolean(activity.getString(R.string.logged_in), true);
 
         if(logged){
             Bundle bundle = getIntent().getExtras();
-            if(bundle!=null){
+            if(bundle!=null && !Constants.SEEN_LAST_TASK){
+
                 //Then new Task received. Open without authentication
+                playSnd();
+
                 Intent intent = new Intent(this, NotifyTaskReceived.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+         //       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
@@ -107,6 +119,11 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
         usernameEdit.setText(username);
         passwordEdit.setText(password);
+    }
+
+    private void playSnd(){
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,1150);
     }
 
     private void login(){
@@ -150,9 +167,9 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
             dialog.dismiss();
     }
 
+
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-        dismissDialog();
 
         String token = response.headers().get(Constants.HEADER_STRING);
 
@@ -160,12 +177,15 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
             editor.putString(getString(R.string.token), token);
             editor.putBoolean(getString(R.string.logged_in), true);
-
             editor.commit();
+
+            dismissDialog();
 
             Intent intent = new Intent(activity, MainActivity.class);
             startActivity(intent);
         }else{
+            dismissDialog();
+
             Toast.makeText(LoginActivity.this, "Fuck", Toast.LENGTH_SHORT).show();
         }
 
@@ -177,4 +197,10 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         dismissDialog();
         Toast.makeText(LoginActivity.this, "Fuck", Toast.LENGTH_SHORT).show();
     }
+
+    public void test(){
+        editor.putBoolean(getString(R.string.last_task_seen), false);
+        editor.commit();
+    }
+
 }

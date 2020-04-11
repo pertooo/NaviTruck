@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -16,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.Task;
 import com.example.navitruck.screens.login.LoginActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -43,9 +45,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-
-
-
         Map<String, String> map =  remoteMessage.getData();
         JSONObject dataObj =new JSONObject(map);
 
@@ -54,6 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (dataObj != null) {
             Log.d(TAG, "Message data payload: " + dataObj);
+
 
             if (true) {
                 // Handle message within 10 seconds
@@ -117,6 +117,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }catch (JSONException e){
             e.printStackTrace();
         }
+
+        Constants.SEEN_LAST_TASK = false;
 
         Intent intent = new Intent(this, LoginActivity.class);
 

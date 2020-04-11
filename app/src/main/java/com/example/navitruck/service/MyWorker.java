@@ -4,12 +4,15 @@ package com.example.navitruck.service;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import com.example.navitruck.R;
 
 public class MyWorker extends Worker {
 

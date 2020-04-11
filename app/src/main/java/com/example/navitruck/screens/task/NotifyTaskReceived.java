@@ -7,28 +7,51 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.navitruck.R;
+import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.Task;
+import com.example.navitruck.screens.login.LoginActivity;
 
 public class NotifyTaskReceived extends Activity {
 
     private static final String TAG = "NotifyTaskReceived";
 
+    private Activity activity;
+
+    private Button closeBtn;
+
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_new_task);
+        final View view = getLayoutInflater().inflate(R.layout.fragment_new_task, null);
+        setContentView(view);
+
+        initViews(view);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             Task task = (Task) bundle.getSerializable("task");
-            Log.e(TAG , task.getAddressFrom());
+            if(task!=null){
+                Log.e(TAG , task.getAddressFrom());
+            }
+
         }
+
+        setListeners();
+
+        System.out.println(123);
 
 
     }
@@ -37,9 +60,26 @@ public class NotifyTaskReceived extends Activity {
     protected void onResume(){
         super.onResume();
 
-        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,1150);
+
     }
+
+    private void initViews(View view){
+        activity = this;
+
+        sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+        closeBtn = view.findViewById(R.id.close);
+    }
+
+    private void setListeners(){
+        closeBtn.setOnClickListener(view -> {
+            Constants.SEEN_LAST_TASK = true;
+
+            finish();
+        });
+    }
+
 
 
 }
