@@ -27,6 +27,9 @@ public class NotifyTaskReceived extends Activity {
     private Activity activity;
 
     private Button closeBtn;
+    private Button submitBtn;
+    private Button plusBtn;
+    private Button minusBtn;
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
@@ -43,15 +46,13 @@ public class NotifyTaskReceived extends Activity {
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             Task task = (Task) bundle.getSerializable("task");
-            if(task!=null){
-                Log.e(TAG , task.getAddressFrom());
-            }
+
 
         }
 
         setListeners();
 
-        System.out.println(123);
+
 
 
     }
@@ -69,15 +70,39 @@ public class NotifyTaskReceived extends Activity {
         sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        submitBtn = view.findViewById(R.id.accept_button);
         closeBtn = view.findViewById(R.id.close);
+        plusBtn = view.findViewById(R.id.plus_button);
+        minusBtn = view.findViewById(R.id.minus_button);
     }
 
     private void setListeners(){
         closeBtn.setOnClickListener(view -> {
             Constants.SEEN_LAST_TASK = true;
-
             finish();
         });
+
+        plusBtn.setOnClickListener(plusListener);
+        minusBtn.setOnClickListener(minusListener);
+    }
+
+    View.OnClickListener plusListener = view -> {
+        double price =getSubmitPrice();
+
+        submitBtn.setText(price + 0.05d +" $");
+    };
+
+    View.OnClickListener minusListener = view -> {
+        double price =getSubmitPrice();
+
+        submitBtn.setText(price - 0.05d +" $");
+    };
+
+    private double getSubmitPrice(){
+        String priceStr = submitBtn.getText().toString();
+        priceStr = priceStr.substring(0, priceStr.length()-1);
+
+        return Double.valueOf(priceStr);
     }
 
 
