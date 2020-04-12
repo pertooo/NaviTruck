@@ -1,4 +1,4 @@
-package com.example.navitruck.dto;
+package com.example.navitruck.dto.abst;
 
 public class AbstractDTO {
     private int id;

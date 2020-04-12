@@ -18,9 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.LoginCallBack;
-import com.example.navitruck.dto.UserDto;
-import com.example.navitruck.network.AuthenticateRestClient;
-import com.example.navitruck.screens.dialog.DialogFragment;
+import com.example.navitruck.screens.dialog.LoadingDialogFragment;
 import com.example.navitruck.screens.main.MainActivity;
 import com.example.navitruck.screens.task.NotifyTaskReceived;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -39,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
     private Button submitBtn;
     private Button resetBtn;
 
-    DialogFragment dialog;
+    LoadingDialogFragment dialog;
 
     private  SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
@@ -81,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         submitBtn = view.findViewById(R.id.btn_submit);
         resetBtn = view.findViewById(R.id.btn_reset);
 
-        dialog = new DialogFragment();
+        dialog = new LoadingDialogFragment();
     }
 
     private void checkloggedIn(){
@@ -131,6 +129,8 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         Intent intent = new Intent(activity, MainActivity.class);
         startActivity(intent);
 
+
+        //TODO delete comment for release
 //        String username = usernameEdit.getText().toString();
 //        String pass = passwordEdit.getText().toString();
 //

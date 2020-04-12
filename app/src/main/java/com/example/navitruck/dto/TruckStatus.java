@@ -1,5 +1,7 @@
 package com.example.navitruck.dto;
 
+import com.example.navitruck.dto.abst.AbstractDTO;
+
 public class TruckStatus extends AbstractDTO {
 
     public TruckStatus(){

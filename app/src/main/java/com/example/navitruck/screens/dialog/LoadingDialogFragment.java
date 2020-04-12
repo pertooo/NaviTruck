@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
-public class DialogFragment extends androidx.fragment.app.DialogFragment {
+public class LoadingDialogFragment extends androidx.fragment.app.DialogFragment {
 
-    public DialogFragment() {
+    public LoadingDialogFragment() {
 
     }
 

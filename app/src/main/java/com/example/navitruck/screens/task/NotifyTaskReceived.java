@@ -2,23 +2,17 @@ package com.example.navitruck.screens.task;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.Task;
-import com.example.navitruck.screens.login.LoginActivity;
 
 public class NotifyTaskReceived extends Activity {
 
@@ -46,21 +40,15 @@ public class NotifyTaskReceived extends Activity {
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             Task task = (Task) bundle.getSerializable("task");
-
-
         }
 
         setListeners();
-
-
-
 
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
 
     }
 
@@ -78,8 +66,28 @@ public class NotifyTaskReceived extends Activity {
 
     private void setListeners(){
         closeBtn.setOnClickListener(view -> {
-            Constants.SEEN_LAST_TASK = true;
-            finish();
+
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+            LayoutInflater factory = LayoutInflater.from(view.getContext());
+            final View view1 = factory.inflate(R.layout.alert_dialog_fragment, null);
+            alertDialog.setView(view1);
+            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Constants.SEEN_LAST_TASK = true;
+                    finish();
+                }
+            });
+
+            alertDialog.show();
+
+
+
         });
 
         plusBtn.setOnClickListener(plusListener);
@@ -87,16 +95,24 @@ public class NotifyTaskReceived extends Activity {
     }
 
     View.OnClickListener plusListener = view -> {
-        double price =getSubmitPrice();
-
-        submitBtn.setText(price + 0.05d +" $");
+        sumPrice(true);
     };
 
     View.OnClickListener minusListener = view -> {
-        double price =getSubmitPrice();
-
-        submitBtn.setText(price - 0.05d +" $");
+        sumPrice(false);
     };
+
+    private void sumPrice(boolean isPlus){
+        double price =getSubmitPrice();
+        double sum = 0d;
+        if(isPlus){
+            sum = price + 0.05d;
+        }else{
+            sum = price - 0.05d;
+        }
+        sum = Math.round(sum * 20.0) / 20.0;
+        submitBtn.setText(sum +" $");
+    }
 
     private double getSubmitPrice(){
         String priceStr = submitBtn.getText().toString();

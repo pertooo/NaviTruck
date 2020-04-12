@@ -1,4 +1,4 @@
-package com.example.navitruck.network;
+package com.example.navitruck.network.rest;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
-import com.example.navitruck.dto.AbstractDTO;
+import com.example.navitruck.dto.abst.AbstractDTO;
+import com.example.navitruck.network.Client;
 
 import java.io.IOException;
 import java.util.List;

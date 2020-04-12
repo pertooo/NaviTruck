@@ -1,6 +1,6 @@
 package com.example.navitruck.network;
 
-import com.example.navitruck.dto.AbstractDTO;
+import com.example.navitruck.dto.abst.AbstractDTO;
 
 import java.util.List;
 

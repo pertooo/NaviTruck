@@ -20,10 +20,10 @@
                 android:id="@+id/close"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/close"
-                android:gravity="right" />
+                android:gravity="end" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -33,25 +33,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="25dp">
-
-
+        android:padding="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             android:orientation="vertical"
+            android:background="@drawable/border_with_title"
             android:padding="10dp">
 
             <TextView
                 android:id="@+id/text_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:background="@color/white"
+                android:background="@drawable/rounded_border_white"
                 android:maxLines="4"
                 android:text="2871, Cropsey Ave. Brooklyn, NY."/>
 
@@ -60,71 +59,318 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 >
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
                     >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/pickup_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center_vertical"
+                            android:text="Pickup: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
+                            <TextView
+                                android:id="@+id/pickup_date_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:textColor="@color/colorText"
+                                android:gravity="center_vertical"
+                                android:text="23/11"
+                                />
+
+                            <TextView
+                                android:id="@+id/pickup_time_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:textColor="@color/white"
+                                android:gravity="center_vertical"
+                                android:text="12:30"
+                                android:layout_marginStart="5dp"
+                                />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
 
                     <TextView
-                        android:id="@+id/zipCode"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:textColor="@color/colorText"
-                        android:gravity="center"
-                        android:text="287 Mile"
-                        android:layout_marginEnd="10dp"
+                        android:gravity="center_vertical"
+                        android:text=" - "
                         />
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/unload_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center_vertical"
+                            android:text="Unload: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/unload_date_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="24sp"
+                                android:textColor="@color/colorText"
+                                android:gravity="center_vertical"
+                                android:text="26/11"
+                                />
+
+                            <TextView
+                                android:id="@+id/unload_time_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="14:00"
+                                android:textColor="@color/white"
+                                android:layout_marginStart="5dp"
+                                android:textSize="24sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
                     >
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/arrow_down" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/weight_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center_vertical"
+                            android:text="Weight: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/weight_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="39dp"
+                                android:gravity="center_vertical"
+                                android:text="4400 Ft"
+                                android:textColor="@color/colorText"
+                                android:textSize="24sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/price_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center_vertical"
+                            android:text="Price: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/price_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:textSize="24sp"
+                                android:textColor="@color/colorText"
+                                android:gravity="center_vertical"
+                                android:text="1325 $"
+                                />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
+
                     >
 
-                    <TextView
-                        android:id="@+id/zipCod2e"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:textSize="22sp"
-                        android:textColor="@color/colorText"
-                        android:gravity="center"
-                        android:text="4:21 h"
-                        android:layout_marginEnd="10dp"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/distance_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center_vertical"
+                            android:text="Dist: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/distance_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:gravity="center_vertical"
+                                android:text="Dist: 1100 ml"
+                                android:textColor="@color/colorText"
+                                android:textSize="24sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/eta_time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorText"
+                            android:gravity="center"
+                            android:text="Time: "
+                            android:visibility="gone"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/eta_time_val_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Time: 45h"
+                                android:textColor="@color/colorText"
+                                android:textSize="24sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
 
 
             </LinearLayout>
@@ -134,12 +380,71 @@
                 android:id="@+id/text_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:background="@color/white"
+                android:background="@drawable/rounded_border_white"
                 android:maxLines="4"
-                android:text="4232, New Britishtonw. Brooklyn, NY. USA Bla Bla 1232-12313"/>
+                android:text="4232, New Britishtonw. Brooklyn, NY. USA  1232-12313"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_with_title"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"
+                        android:text="* საწყობი იკეტება 19:00 ზე"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"
+                        android:text="* ტვირთი ტეხვადია"/>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="შენიშვნა"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:background="@color/white"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -189,7 +494,7 @@
                 android:id ="@+id/accept_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1,30 $"
+                android:text="1.30 $"
                 android:layout_gravity="center"
                 android:background="@drawable/button_round_accept_l"
                 android:textColor="@color/white"

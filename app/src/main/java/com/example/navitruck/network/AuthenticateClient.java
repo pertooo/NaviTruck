@@ -1,9 +1,6 @@
 package com.example.navitruck.network;
 
-import com.example.navitruck.dto.AbstractDTO;
 import com.example.navitruck.dto.UserDto;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
