@@ -4,17 +4,32 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
+import com.example.navitruck.callback.TaskAcceptCallback;
 import com.example.navitruck.dto.Task;
+import com.example.navitruck.dto.abst.AbstractDTO;
+import com.example.navitruck.network.TaskClient;
+import com.example.navitruck.network.rest.AuthenticateRestClient;
+import com.example.navitruck.network.rest.TaskRestClient;
+import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
 
-public class NotifyTaskReceived extends Activity {
+import retrofit2.Call;
+import retrofit2.Response;
+
+public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptCallback {
 
     private static final String TAG = "NotifyTaskReceived";
 
@@ -28,6 +43,8 @@ public class NotifyTaskReceived extends Activity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
+    CircularProgressBarFragment progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,7 @@ public class NotifyTaskReceived extends Activity {
         final View view = getLayoutInflater().inflate(R.layout.fragment_new_task, null);
         setContentView(view);
 
+        getSupportActionBar().hide();
         initViews(view);
 
         Bundle bundle = getIntent().getExtras();
@@ -55,13 +73,15 @@ public class NotifyTaskReceived extends Activity {
     private void initViews(View view){
         activity = this;
 
-        sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
         submitBtn = view.findViewById(R.id.accept_button);
         closeBtn = view.findViewById(R.id.close);
         plusBtn = view.findViewById(R.id.plus_button);
         minusBtn = view.findViewById(R.id.minus_button);
+
+        progress = new CircularProgressBarFragment();
     }
 
     private void setListeners(){
@@ -87,6 +107,13 @@ public class NotifyTaskReceived extends Activity {
             alertDialog.show();
 
 
+
+        });
+
+        submitBtn.setOnClickListener(view -> {
+            startDialog();
+            TaskRestClient client = new TaskRestClient(activity);
+            client.accept(5, getSubmitPrice(), this);
 
         });
 
@@ -121,6 +148,40 @@ public class NotifyTaskReceived extends Activity {
         return Double.valueOf(priceStr);
     }
 
+    private void startDialog(){
+        if(progress!=null){
+            FragmentManager fm = getSupportFragmentManager();
+            progress.setCancelable(false);
+
+            progress.show(fm, "");
+        }
+    }
+
+    private void endDialog(){
+        if(progress!=null){
+            progress.dismiss();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+
+            return false;
+
+        }
+        return true;
+    }
 
 
+    @Override
+    public void onResponse(Call<AbstractDTO> call, Response<AbstractDTO> response) {
+        endDialog();
+    }
+
+    @Override
+    public void onFailure(Call<AbstractDTO> call, Throwable t) {
+        endDialog();
+    }
 }

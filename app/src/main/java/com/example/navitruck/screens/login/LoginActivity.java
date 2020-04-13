@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.LoginCallBack;
+import com.example.navitruck.dto.UserDto;
+import com.example.navitruck.network.rest.AuthenticateRestClient;
 import com.example.navitruck.screens.dialog.LoadingDialogFragment;
 import com.example.navitruck.screens.main.MainActivity;
 import com.example.navitruck.screens.task.NotifyTaskReceived;
@@ -70,7 +72,8 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
     private void initViews(View view){
         activity = this;
 
-        sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+
+        sharedPref = getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
         usernameEdit = view.findViewById(R.id.et_user_name);
@@ -126,23 +129,23 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
     private void login(){
 
-        Intent intent = new Intent(activity, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(activity, MainActivity.class);
+//        startActivity(intent);
+//
+//
+//        //TODO delete comment for release
+        String username = usernameEdit.getText().toString();
+        String pass = passwordEdit.getText().toString();
 
+        editor.putString(getString(R.string.logged_user), username);
+        editor.putString(getString(R.string.logged_pass), pass);
 
-        //TODO delete comment for release
-//        String username = usernameEdit.getText().toString();
-//        String pass = passwordEdit.getText().toString();
-//
-//        editor.putString(getString(R.string.logged_user), username);
-//        editor.putString(getString(R.string.logged_pass), pass);
-//
-//        UserDto userDto = new UserDto();
-//        userDto.setUsername(username);
-//        userDto.setPassword(pass);
-//
-//        AuthenticateRestClient client = new AuthenticateRestClient();
-//        client.authenticate(userDto, this);
+        UserDto userDto = new UserDto();
+        userDto.setUsername(username);
+        userDto.setPassword(pass);
+
+        AuthenticateRestClient client = new AuthenticateRestClient();
+        client.authenticate(userDto, this);
     }
 
     private void setListeners(){

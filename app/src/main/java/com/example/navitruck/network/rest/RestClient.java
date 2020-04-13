@@ -32,7 +32,7 @@ public class RestClient {
         @Override
         public okhttp3.Response intercept(Chain chain) throws IOException {
 
-            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = activity.getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
             String token = sharedPref.getString(activity.getString(R.string.token),"");
 
             return chain.proceed(
