@@ -31,14 +31,6 @@ public class StatusRecyclerViewholder  extends RecyclerView.ViewHolder  {
         checkedImage = itemView.findViewById(R.id.checkedImageImg);
         checkedNote = itemView.findViewById(R.id.checkedNoteImg);
 
-        itemView.setTag(this);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
     }
 
     void bind(TruckStatus truckStatus, OnAdapterClickView clickListener){
