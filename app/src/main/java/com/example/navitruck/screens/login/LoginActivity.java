@@ -23,7 +23,11 @@ import com.example.navitruck.network.rest.AuthenticateRestClient;
 import com.example.navitruck.screens.dialog.LoadingDialogFragment;
 import com.example.navitruck.screens.main.MainActivity;
 import com.example.navitruck.screens.task.NotifyTaskReceived;
+import com.example.navitruck.service.BasicShearedDataService;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -58,7 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         setSavedData();
         setListeners();
 
-
+        BasicShearedDataService shearedDataService = new BasicShearedDataService(this);
+        shearedDataService.save();
     }
 
     @Override
@@ -68,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
         checkloggedIn();
 
     }
+
 
     private void initViews(View view){
         activity = this;

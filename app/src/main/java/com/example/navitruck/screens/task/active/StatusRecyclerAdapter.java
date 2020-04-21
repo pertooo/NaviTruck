@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.TruckStatus;
+import com.example.navitruck.screens.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,15 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
 
     private List<TruckStatus> mData;
     private LayoutInflater mInflater;
+    private OnAdapterClickView mClickListener;
 
     private Context context;
 
     // data is passed into the constructor
-    StatusRecyclerAdapter(Context context, List<TruckStatus> data) {
+    StatusRecyclerAdapter(Context context, List<TruckStatus> data, OnAdapterClickView clickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mClickListener = clickListener;
     }
 
     // inflates the row layout from xml when needed
@@ -45,6 +49,9 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
     @Override
     public void onBindViewHolder(StatusRecyclerViewholder holder, int position) {
         TruckStatus status = mData.get(position);
+        holder.bind(status, mClickListener);
+
+
         holder.statusKey.setText(status.getStatus()+"");
         holder.statusTxt.setText(status.getStatusStr());
 
@@ -68,9 +75,14 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
             }
         }
 
+        holder.checkedNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Note - "+status.getNote(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return mData.size();
@@ -78,21 +90,10 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
 
 
 
+    TruckStatus getItem(int id) {
+        return mData.get(id);
+    }
 
 
 
-//    // convenience method for getting data at click position
-//    String getItem(int id) {
-//        return mData.get(id);
-//    }
-//
-//    // allows clicks events to be caught
-//    void setClickListener(ItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
-//
-//    // parent activity will implement this method to respond to click events
-//    public interface ItemClickListener {
-//        void onItemClick(View view, int position);
-//    }
 }
