@@ -1,8 +1,11 @@
 package com.example.navitruck.screens.main;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.navitruck.R;
 import com.example.navitruck.screens.base.BaseActivity;
+import com.example.navitruck.screens.task.active.ActiveTaskFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -52,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        if(true){
+            Intent intent = new Intent(this, ActiveTaskFragment.class);
+            startActivity(intent);
+        }
 
 
         initViews();

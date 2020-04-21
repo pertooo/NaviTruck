@@ -129,23 +129,23 @@ public class LoginActivity extends AppCompatActivity implements LoginCallBack {
 
     private void login(){
 
-//        Intent intent = new Intent(activity, MainActivity.class);
-//        startActivity(intent);
-//
-//
+        Intent intent = new Intent(activity, MainActivity.class);
+        startActivity(intent);
+
+
 //        //TODO delete comment for release
-        String username = usernameEdit.getText().toString();
-        String pass = passwordEdit.getText().toString();
-
-        editor.putString(getString(R.string.logged_user), username);
-        editor.putString(getString(R.string.logged_pass), pass);
-
-        UserDto userDto = new UserDto();
-        userDto.setUsername(username);
-        userDto.setPassword(pass);
-
-        AuthenticateRestClient client = new AuthenticateRestClient();
-        client.authenticate(userDto, this);
+//        String username = usernameEdit.getText().toString();
+//        String pass = passwordEdit.getText().toString();
+//
+//        editor.putString(getString(R.string.logged_user), username);
+//        editor.putString(getString(R.string.logged_pass), pass);
+//
+//        UserDto userDto = new UserDto();
+//        userDto.setUsername(username);
+//        userDto.setPassword(pass);
+//
+//        AuthenticateRestClient client = new AuthenticateRestClient();
+//        client.authenticate(userDto, this);
     }
 
     private void setListeners(){

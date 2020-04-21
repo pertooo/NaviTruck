@@ -21,6 +21,7 @@ import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.TaskAcceptCallback;
 import com.example.navitruck.dto.Task;
 import com.example.navitruck.dto.abst.AbstractDTO;
+import com.example.navitruck.dto.response.ResponseTaskDTO;
 import com.example.navitruck.network.TaskClient;
 import com.example.navitruck.network.rest.AuthenticateRestClient;
 import com.example.navitruck.network.rest.TaskRestClient;
@@ -106,14 +107,12 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
 
             alertDialog.show();
 
-
-
         });
 
         submitBtn.setOnClickListener(view -> {
             startDialog();
             TaskRestClient client = new TaskRestClient(activity);
-            client.accept(5, getSubmitPrice(), this);
+            client.accept(7, 3, getSubmitPrice(), this);
 
         });
 
@@ -176,12 +175,21 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
 
 
     @Override
-    public void onResponse(Call<AbstractDTO> call, Response<AbstractDTO> response) {
+    public void onResponse(Call<ResponseTaskDTO<Object>> call, Response<ResponseTaskDTO<Object>> response) {
+
+        ResponseTaskDTO<Object> responseObj = response.body();
+
+        Object obj = responseObj.getContent();
+
+        if(obj.toString().equals("ASSIGNED")){
+            //open new success fragment
+        };
+
         endDialog();
     }
 
     @Override
-    public void onFailure(Call<AbstractDTO> call, Throwable t) {
+    public void onFailure(Call<ResponseTaskDTO<Object>> call, Throwable t) {
         endDialog();
     }
 }

@@ -8,11 +8,13 @@ import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.TaskAcceptCallback;
 import com.example.navitruck.dto.abst.AbstractDTO;
+import com.example.navitruck.dto.response.ResponseTaskDTO;
 import com.example.navitruck.network.Client;
 import com.example.navitruck.network.TaskClient;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -31,7 +33,11 @@ public class TaskRestClient {
         this.activity = activity;
     }
 
-    OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+    OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+            .connectTimeout(300, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(new Interceptor() {
         @Override
         public okhttp3.Response intercept(Chain chain) throws IOException {
 
@@ -56,9 +62,9 @@ public class TaskRestClient {
     Retrofit retrofit = builder.client(httpClient.build()).build();
     TaskClient client = retrofit.create(TaskClient.class);
 
-    public void accept(long taskId, double fee, Callback<AbstractDTO> cb){
+    public void accept(long taskId, long userId, double fee, Callback<ResponseTaskDTO<Object>> cb){
 
-        Call<AbstractDTO> call = client.accept(taskId, fee);
+        Call<ResponseTaskDTO<Object>> call = client.accept(taskId, userId, fee);
         call.enqueue(cb);
     }
 }

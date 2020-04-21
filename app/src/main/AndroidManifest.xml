@@ -63,6 +63,9 @@
         <activity android:name=".screens.main.MainActivity">
         </activity>
 
+        <activity android:name=".screens.task.active.ActiveTaskFragment">
+        </activity>
+
         <activity
             android:name=".screens.task.NotifyTaskReceived"
             android:parentActivityName=".screens.main.MainActivity"
