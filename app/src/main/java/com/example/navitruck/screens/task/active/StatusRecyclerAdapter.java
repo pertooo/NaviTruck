@@ -1,26 +1,20 @@
 package com.example.navitruck.screens.task.active;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navitruck.R;
-import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.TruckStatus;
-import com.example.navitruck.screens.login.LoginActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerViewholder> {
+public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerViewholder>  {
 
     private List<TruckStatus> mData;
     private LayoutInflater mInflater;
@@ -75,10 +69,17 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
             }
         }
 
-        holder.checkedNote.setOnClickListener(new View.OnClickListener() {
+        holder.noteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Note - "+status.getNote(), Toast.LENGTH_SHORT).show();
+                onNoteClick(status);
+            }
+        });
+
+        holder.imagesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onImagesClick(status);
             }
         });
     }
@@ -88,12 +89,18 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerVi
         return mData.size();
     }
 
-
-
-    TruckStatus getItem(int id) {
-        return mData.get(id);
+    private void onNoteClick(TruckStatus status){
+        Toast.makeText(context, "Note - "+status.getNote(), Toast.LENGTH_SHORT).show();
     }
 
+    private void onImagesClick(TruckStatus status){
+        Toast.makeText(context, "On images clikc ", Toast.LENGTH_SHORT).show();
+    }
+
+    public void handleRecordChange(int position){
+        mData.get(position).setDone(true);
+        this.notifyItemChanged(position);
+    }
 
 
 }

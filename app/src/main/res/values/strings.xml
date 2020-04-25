@@ -19,6 +19,8 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
 
 
 //Keys Start

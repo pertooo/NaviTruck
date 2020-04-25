@@ -4,24 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.dto.TruckStatus;
+import com.example.navitruck.screens.task.active.dialog.AcceptFormDialogFragment;
+import com.example.navitruck.screens.task.active.dialog.OnAcceptFormView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterClickView {
+public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterClickView, OnAcceptFormView {
 
     private static final String TAG = "ActiveTaskFragment";
 
@@ -32,6 +32,7 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
+    ArrayList<TruckStatus> statusArrayList = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +41,18 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
 
         initViews(view);
 
-        ArrayList<TruckStatus> array = getStatusList();
+        statusArrayList = getStatusList();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+   //     recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
-        adapter = new StatusRecyclerAdapter(this, array, this::onItemClick);
+        adapter = new StatusRecyclerAdapter(this, statusArrayList, this::onItemClick);
         recyclerView.setAdapter(adapter);
 
     }
+
+
+
 
     private ArrayList<TruckStatus> getStatusList(){
         Gson gson = new Gson();
@@ -66,6 +70,15 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
 
     @Override
     public void onItemClick(TruckStatus truckStatus) {
-        Toast.makeText(this, truckStatus.getStatusStr(), Toast.LENGTH_LONG).show();
+        AcceptFormDialogFragment fragment = new AcceptFormDialogFragment(this::acceptStatus, truckStatus.getStatus()-1);
+        FragmentManager manager = getSupportFragmentManager();
+
+        fragment.show(manager, "");
+    }
+
+
+    @Override
+    public void acceptStatus(int position) {
+        adapter.handleRecordChange(position);
     }
 }
