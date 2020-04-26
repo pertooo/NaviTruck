@@ -1,15 +1,11 @@
 package com.example.navitruck.screens.task.active.dialog;
 
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navitruck.R;
-import com.example.navitruck.dto.TruckStatus;
-import com.example.navitruck.screens.task.active.OnAdapterClickView;
 
 public class ImagesRecyclerViewholder extends RecyclerView.ViewHolder  {
 
@@ -31,15 +27,17 @@ public class ImagesRecyclerViewholder extends RecyclerView.ViewHolder  {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(position == size)
+                if(position == size-1)
                     clickListener.addImage();
+                else
+                    clickListener.hideDeleteIcon(position);
             }
         });
 
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                clickListener.deleteImage(position);
+                clickListener.showDeleteIcon(position);
                 return true;
             }
         });

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navitruck.R;
+import com.example.navitruck.dto.ImageRecyclerDTO;
 import com.example.navitruck.dto.TruckStatus;
 import com.example.navitruck.screens.task.active.OnAdapterClickView;
 import com.example.navitruck.screens.task.active.StatusRecyclerViewholder;
@@ -21,19 +22,17 @@ import java.util.List;
 
 public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerViewholder> {
 
-    private List<Uri> mData;
-    private ArrayList<Boolean> mDataBoolean;
+    private ArrayList<ImageRecyclerDTO> mData;
     private LayoutInflater mInflater;
     private OnAddImgClick mClickListener;
 
     private Context context;
 
     // data is passed into the constructor
-    ImagesRecyclerAdapter(Context context, List<Uri> data, OnAddImgClick mClickListener) {
+    ImagesRecyclerAdapter(Context context, ArrayList<ImageRecyclerDTO> data, OnAddImgClick mClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.mClickListener = mClickListener;
-        this.mDataBoolean = new ArrayList<>(mData.size());
     }
 
     // inflates the row layout from xml when needed
@@ -50,50 +49,47 @@ public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerVi
     public void onBindViewHolder(ImagesRecyclerViewholder holder, int position) {
         holder.bind( mClickListener, position, mData.size());
 
-        if(mData.size()>0) {
-            if(mData.size()==position)
-                return;
-            holder.imageView.setImageURI(mData.get(position));
-        }else
-            holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.checked, context.getTheme()));
 
-        if(mDataBoolean.size()>0 && mDataBoolean.get(position)){
+        holder.imageView.setImageURI(mData.get(position).getUri());
+        if(mData.get(position).isSelected())
             holder.deleteView.setVisibility(View.VISIBLE);
-        }
+        else
+            holder.deleteView.setVisibility(View.GONE);
+
 
         holder.deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mData.remove(position);
-                mDataBoolean.remove(position);
-                notifyItemRemoved(position);
+                notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mData.size()+1;
+        return mData.size();
     }
 
     public void showDeleteIcon(int position){
-        if(mDataBoolean.size()>0){
-            mDataBoolean.set(position, true);
-            this.notifyItemChanged(position);
+        if(position != mData.size()-1){
+            mData.get(position).setSelected(true);
+            this.notifyDataSetChanged();
         }
     }
 
-    public void handleDataChange(List<Uri> newData){
-        mData.addAll(newData);
-        for(int i = 0; i < newData.size(); i++){
-            mDataBoolean.add(false);
-        }
+    public void hideDeleteIcon(int position){
+        mData.get(position).setSelected(false);
         this.notifyDataSetChanged();
     }
 
-    public void handleDataChange(Uri uri){
-        mData.add(uri);
-        mDataBoolean.add(false);
+    public void handleDataChange(List<ImageRecyclerDTO> newData){
+        mData.addAll(0, newData);
+        this.notifyDataSetChanged();
+    }
+
+    public void handleDataChange(ImageRecyclerDTO data){
+        mData.add(0, data);
         this.notifyDataSetChanged();
     }
 

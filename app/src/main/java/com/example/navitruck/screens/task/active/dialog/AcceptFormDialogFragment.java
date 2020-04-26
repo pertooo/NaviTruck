@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
+import com.example.navitruck.dto.ImageRecyclerDTO;
 import com.example.navitruck.dto.TruckStatus;
 import com.example.navitruck.Utils.BasicShearedDataService;
 import com.example.navitruck.screens.task.active.StatusRecyclerAdapter;
@@ -78,8 +79,14 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
         initViews(v);
         setLinteners();
 
-        ArrayList<Uri> arrayList= new ArrayList<Uri>();
-
+        ArrayList<ImageRecyclerDTO> arrayList= new ArrayList<ImageRecyclerDTO>();
+        Uri imageUri = (new Uri.Builder())
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(getResources().getResourcePackageName(R.drawable.addimg))
+                .appendPath(getResources().getResourceTypeName(R.drawable.addimg))
+                .appendPath(getResources().getResourceEntryName(R.drawable.addimg))
+                .build();
+        arrayList.add(new ImageRecyclerDTO(imageUri,false));
         imagesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         adapter = new ImagesRecyclerAdapter(getContext(), arrayList, this);
         imagesRecyclerView.setAdapter(adapter);
@@ -135,7 +142,12 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
     }
 
     @Override
-    public void deleteImage(int position) {
+    public void hideDeleteIcon(int position) {
+        adapter.hideDeleteIcon(position);
+    }
+
+    @Override
+    public void showDeleteIcon(int position) {
         adapter.showDeleteIcon(position);
     }
 
@@ -171,18 +183,18 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
 
                 if (data.getData() != null) {         //on Single image selected
 
-                    Uri mImageUri = data.getData();
-                    adapter.handleDataChange(mImageUri);
+                    ImageRecyclerDTO dto = new ImageRecyclerDTO(data.getData(), false);
+
+                    adapter.handleDataChange(dto);
 
                 } else {                              //on multiple image selected
                     if (data.getClipData() != null) {
                         ClipData mClipData = data.getClipData();
-                        ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+                        ArrayList<ImageRecyclerDTO> mArrayUri = new ArrayList<ImageRecyclerDTO>();
                         for (int i = 0; i < mClipData.getItemCount(); i++) {
 
                             ClipData.Item item = mClipData.getItemAt(i);
-                            Uri uri = item.getUri();
-                            mArrayUri.add(uri);
+                            mArrayUri.add(new ImageRecyclerDTO(item.getUri(), false));
                         }
                         adapter.handleDataChange(mArrayUri);
                         Log.v("MainActivity", "Selected Images" + mArrayUri.size());
