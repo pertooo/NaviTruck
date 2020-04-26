@@ -8,13 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,26 +21,30 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
+import com.example.navitruck.callback.TaskUpdateCallBack;
 import com.example.navitruck.dto.ImageRecyclerDTO;
 import com.example.navitruck.dto.TruckStatus;
 import com.example.navitruck.Utils.BasicShearedDataService;
-import com.example.navitruck.screens.task.active.StatusRecyclerAdapter;
+import com.example.navitruck.dto.response.ResponseTaskDTO;
+import com.example.navitruck.network.rest.TaskRestClient;
+import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcceptFormDialogFragment extends DialogFragment implements OnAddImgClick {
+import retrofit2.Call;
+import retrofit2.Response;
+
+public class AcceptFormDialogFragment extends DialogFragment implements OnAddImgClick, TaskUpdateCallBack {
 
 
 
@@ -66,6 +66,9 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
 
     private OnAcceptFormView onAcceptView;
     private int position;
+
+    private CircularProgressBarFragment progress;
+
 
     public AcceptFormDialogFragment(OnAcceptFormView onAcceptView, int position){
         this.onAcceptView = onAcceptView;
@@ -110,15 +113,46 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
         });
 
         saveBtn.setOnClickListener(view -> {
-            ArrayList<TruckStatus> array = getStatusList();
-            array.get(position).setDone(true);
 
-            BasicShearedDataService shearedDataService = new BasicShearedDataService(getContext(), array);
-            shearedDataService.save(true);
+            startDialog();
+            TaskRestClient client = new TaskRestClient(getActivity());
+            client.updateStatus(2, 2, adapter.getUploadImages(), this);
 
-            onAcceptView.acceptStatus(position);
-            dismiss();
         });
+    }
+
+    private void startDialog(){
+        if(progress!=null){
+            FragmentManager fm = getFragmentManager();
+            progress.setCancelable(false);
+
+            progress.show(fm, "");
+        }
+    }
+
+    private void endDialog(){
+        if(progress!=null){
+            progress.dismiss();
+        }
+    }
+
+    @Override
+    public void onResponse(Call<ResponseTaskDTO<Object>> call, Response<ResponseTaskDTO<Object>> response) {
+        ArrayList<TruckStatus> array = getStatusList();
+        array.get(position).setDone(true);
+
+        BasicShearedDataService shearedDataService = new BasicShearedDataService(getContext(), array);
+        shearedDataService.save(true);
+
+        onAcceptView.acceptStatus(position);
+        endDialog();
+    }
+
+    @Override
+    public void onFailure(Call<ResponseTaskDTO<Object>> call, Throwable t) {
+        endDialog();
+
+        Toast.makeText(getContext(), "FUuuuuuck", Toast.LENGTH_LONG).show();
     }
 
     private ArrayList<TruckStatus> getStatusList(){
@@ -154,15 +188,12 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==REQUEST_PERMISSION_READ_EXTERNAL){
-            if(grantResults.length > 0)
-            {
+            if(grantResults.length > 0){
                 int grantResult = grantResults[0];
-                if(grantResult == PackageManager.PERMISSION_GRANTED)
-                {
+                if(grantResult == PackageManager.PERMISSION_GRANTED){
                     // If user grant the permission then open choose image popup dialog.
                     openPictureGallery();
-                }else
-                {
+                }else{
                     Toast.makeText(getContext(), "You denied read external storage permission.", Toast.LENGTH_LONG).show();
                 }
             }
@@ -174,19 +205,14 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
         super.onActivityResult(requestCode, resultCode, data);
 
         try {
-            // When an Image is picked
             if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == Activity.RESULT_OK && null != data) {
-                // Get the Image from data
-
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 imagesEncodedList = new ArrayList<String>();
 
                 if (data.getData() != null) {         //on Single image selected
-
                     ImageRecyclerDTO dto = new ImageRecyclerDTO(data.getData(), false);
 
                     adapter.handleDataChange(dto);
-
                 } else {                              //on multiple image selected
                     if (data.getClipData() != null) {
                         ClipData mClipData = data.getClipData();
@@ -197,7 +223,6 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
                             mArrayUri.add(new ImageRecyclerDTO(item.getUri(), false));
                         }
                         adapter.handleDataChange(mArrayUri);
-                        Log.v("MainActivity", "Selected Images" + mArrayUri.size());
                     }
                 }
             } else {
@@ -216,4 +241,6 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_MULTIPLE);
     }
+
+
 }

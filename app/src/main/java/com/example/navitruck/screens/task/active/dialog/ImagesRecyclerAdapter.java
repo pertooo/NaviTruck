@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -19,6 +20,8 @@ import com.example.navitruck.screens.task.active.StatusRecyclerViewholder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerViewholder> {
 
@@ -57,12 +60,9 @@ public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerVi
             holder.deleteView.setVisibility(View.GONE);
 
 
-        holder.deleteView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mData.remove(position);
-                notifyDataSetChanged();
-            }
+        holder.deleteView.setOnClickListener(view -> {
+            mData.remove(position);
+            notifyDataSetChanged();
         });
     }
 
@@ -72,7 +72,7 @@ public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerVi
     }
 
     public void showDeleteIcon(int position){
-        if(position != mData.size()-1){
+        if(position != mData.size()-1){ // except last item
             mData.get(position).setSelected(true);
             this.notifyDataSetChanged();
         }
@@ -93,6 +93,12 @@ public class ImagesRecyclerAdapter extends RecyclerView.Adapter<ImagesRecyclerVi
         this.notifyDataSetChanged();
     }
 
+    public List<Uri> getUploadImages(){
+        List<Uri> data = mData.stream()
+                .map(ImageRecyclerDTO::getUri)
+                .collect(Collectors.toList());
+        return data.subList(0, data.size()-1);
+    }
 }
 
 

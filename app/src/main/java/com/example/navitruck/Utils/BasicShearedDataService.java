@@ -61,9 +61,9 @@ public class BasicShearedDataService {
 
 
     private void initStatusArray(){
-        statusArrayList.add(new TruckStatus(1,"Going To Pickup", "ok", false, true));
-        statusArrayList.add(new TruckStatus(2,"Waiting For Pickup", null, false, true));
-        statusArrayList.add(new TruckStatus(3,"Picking Up", "", true, true));
+        statusArrayList.add(new TruckStatus(1,"Going To Pickup", "ok", false, false));
+        statusArrayList.add(new TruckStatus(2,"Waiting For Pickup", null, false, false));
+        statusArrayList.add(new TruckStatus(3,"Picking Up", "", true, false));
         statusArrayList.add(new TruckStatus(4,"On Way to Dest"));
         statusArrayList.add(new TruckStatus(5,"Waiting for Unload"));
         statusArrayList.add(new TruckStatus(6,"Unloading"));

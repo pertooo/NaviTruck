@@ -3,21 +3,30 @@ package com.example.navitruck.network.rest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
+import android.net.Uri;
+import android.util.Log;
 
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
 import com.example.navitruck.callback.TaskAcceptCallback;
+import com.example.navitruck.callback.TaskUpdateCallBack;
 import com.example.navitruck.dto.abst.AbstractDTO;
 import com.example.navitruck.dto.response.ResponseTaskDTO;
 import com.example.navitruck.network.Client;
 import com.example.navitruck.network.TaskClient;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,5 +75,19 @@ public class TaskRestClient {
 
         Call<ResponseTaskDTO<Object>> call = client.accept(taskId, userId, fee);
         call.enqueue(cb);
+    }
+
+    public void updateStatus(long taskId, long userId, List<Uri> uriArrayList, TaskUpdateCallBack cb){
+
+        MultipartBody.Part[] multipartTypedOutput = new MultipartBody.Part[uriArrayList.size()];
+
+        for (int index = 0; index < uriArrayList.size(); index++) {
+            File file2 = new File(uriArrayList.get(index).getPath());
+            RequestBody surveyBody = RequestBody.create(MediaType.parse("image/*"), file2);
+            multipartTypedOutput[index] = MultipartBody.Part.createFormData("imageFiles[]", file2.getPath(), surveyBody);
+        }
+
+     //   MultipartBody.Part imagePart = MultipartBody.Part.createFormData("profileImage", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+        Call<ResponseBody> call = client.updateStatus(multipartTypedOutput,taskId, userId);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.navitruck.screens.task.active;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.navitruck.R;
 import com.example.navitruck.Utils.Constants;
+import com.example.navitruck.callback.TaskUpdateCallBack;
 import com.example.navitruck.dto.TruckStatus;
+import com.example.navitruck.dto.response.ResponseTaskDTO;
+import com.example.navitruck.network.rest.TaskRestClient;
+import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
 import com.example.navitruck.screens.task.active.dialog.AcceptFormDialogFragment;
 import com.example.navitruck.screens.task.active.dialog.OnAcceptFormView;
 import com.google.gson.Gson;
@@ -19,6 +24,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterClickView, OnAcceptFormView {
@@ -33,11 +41,14 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
     private SharedPreferences.Editor editor;
 
     ArrayList<TruckStatus> statusArrayList = null;
+    private Activity activity = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View view = getLayoutInflater().inflate(R.layout.fragment_current_task, null);
         setContentView(view);
+        activity = this;
 
         initViews(view);
 
@@ -80,5 +91,8 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
     @Override
     public void acceptStatus(int position) {
         adapter.handleRecordChange(position);
+
     }
+
+
 }
