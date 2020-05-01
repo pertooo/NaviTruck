@@ -66,10 +66,14 @@
         <activity android:name=".screens.task.active.ActiveTaskFragment">
         </activity>
 
+        <activity android:name=".screens.main.ChartActivity">
+        </activity>
+
         <activity
             android:name=".screens.task.NotifyTaskReceived"
             android:parentActivityName=".screens.main.MainActivity"
             android:launchMode="singleTask"
+            android:noHistory = "true"
             android:taskAffinity=""
             android:excludeFromRecents="true"
             />

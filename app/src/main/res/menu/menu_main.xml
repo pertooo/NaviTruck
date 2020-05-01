@@ -8,4 +8,20 @@
         app:showAsAction="always"
 
         />
+
+    <item
+        android:id="@+id/availibility"
+        android:orderInCategory="100"
+        android:title="available"
+        app:showAsAction="never"
+
+        />
+
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never"
+
+        />
 </menu>

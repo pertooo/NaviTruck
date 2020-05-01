@@ -29,10 +29,17 @@ public interface TaskClient {
             @Query("fee") double fee
     );
 
-    @Multipart
-    @PUT("/task/update_status")
-    Call<ResponseBody> updateStatus(@Part("files") MultipartBody.Part[] files,
-                                    @Query("taskId") long taskId,
-                                    @Query("userId") long userId);
+//    @Multipart
+//    @PUT("/task/update_status")
+//    Call<ResponseBody> updateStatus(@Part("files") MultipartBody.Part[] files,
+//                                    @Query("taskId") long taskId,
+//                                    @Query("userId") long userId)
+
+
+    @POST("/task/update_status")
+    Call<ResponseTaskDTO<Object>> updateStatus(
+            @Query("taskId") long taskId,
+            @Query("userId") long userId);
+
 
 }

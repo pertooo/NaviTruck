@@ -26,6 +26,7 @@ import com.example.navitruck.network.TaskClient;
 import com.example.navitruck.network.rest.AuthenticateRestClient;
 import com.example.navitruck.network.rest.TaskRestClient;
 import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
+import com.example.navitruck.screens.task.active.ActiveTaskFragment;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -180,9 +181,10 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
         ResponseTaskDTO<Object> responseObj = response.body();
 
         Object obj = responseObj.getContent();
-
         if(obj.toString().equals("ASSIGNED")){
-            //open new success fragment
+            Intent intent = new Intent(this, ActiveTaskFragment.class);
+            finish();
+            startActivity(intent);
         };
 
         endDialog();

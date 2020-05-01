@@ -34,6 +34,7 @@ import com.example.navitruck.Utils.BasicShearedDataService;
 import com.example.navitruck.dto.response.ResponseTaskDTO;
 import com.example.navitruck.network.rest.TaskRestClient;
 import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
+import com.example.navitruck.screens.dialog.LoadingDialogFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -67,7 +68,7 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
     private OnAcceptFormView onAcceptView;
     private int position;
 
-    private CircularProgressBarFragment progress;
+    private LoadingDialogFragment progress;
 
 
     public AcceptFormDialogFragment(OnAcceptFormView onAcceptView, int position){
@@ -105,6 +106,8 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
 
         cancelBtn = v.findViewById(R.id.cancel);
         saveBtn = v.findViewById(R.id.save);
+
+        progress = new LoadingDialogFragment();
     }
 
     private void setLinteners(){
@@ -146,6 +149,8 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
 
         onAcceptView.acceptStatus(position);
         endDialog();
+        dismiss();
+
     }
 
     @Override
@@ -241,6 +246,8 @@ public class AcceptFormDialogFragment extends DialogFragment implements OnAddImg
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_MULTIPLE);
     }
+
+
 
 
 }

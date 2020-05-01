@@ -2,9 +2,12 @@ package com.example.navitruck.screens.task.active;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -17,6 +20,7 @@ import com.example.navitruck.dto.TruckStatus;
 import com.example.navitruck.dto.response.ResponseTaskDTO;
 import com.example.navitruck.network.rest.TaskRestClient;
 import com.example.navitruck.screens.dialog.CircularProgressBarFragment;
+import com.example.navitruck.screens.main.MainActivity;
 import com.example.navitruck.screens.task.active.dialog.AcceptFormDialogFragment;
 import com.example.navitruck.screens.task.active.dialog.OnAcceptFormView;
 import com.google.gson.Gson;
@@ -35,6 +39,7 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
 
 
     RecyclerView recyclerView;
+    private Button backBtn;
     StatusRecyclerAdapter adapter;
 
     private SharedPreferences sharedPref;
@@ -60,6 +65,14 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
         adapter = new StatusRecyclerAdapter(this, statusArrayList, this::onItemClick);
         recyclerView.setAdapter(adapter);
 
+
+        backBtn.setOnClickListener(view1 -> {
+            Intent intent = new Intent(ActiveTaskFragment.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+
     }
 
 
@@ -76,6 +89,7 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
         sharedPref = getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        backBtn = v.findViewById(R.id.back_button);
         recyclerView = v.findViewById(R.id.statusRec);
     }
 
@@ -93,6 +107,15 @@ public class ActiveTaskFragment extends AppCompatActivity implements OnAdapterCl
         adapter.handleRecordChange(position);
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            return false;
+        }
+        return true;
+    }
+
 
 
 }

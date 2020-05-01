@@ -77,17 +77,17 @@ public class TaskRestClient {
         call.enqueue(cb);
     }
 
-    public void updateStatus(long taskId, long userId, List<Uri> uriArrayList, TaskUpdateCallBack cb){
+    public void updateStatus(long taskId, long userId, List<Uri> uriArrayList, Callback<ResponseTaskDTO<Object>> cb){
 
-        MultipartBody.Part[] multipartTypedOutput = new MultipartBody.Part[uriArrayList.size()];
+//        MultipartBody.Part[] multipartTypedOutput = new MultipartBody.Part[uriArrayList.size()];
+//
+//        for (int index = 0; index < uriArrayList.size(); index++) {
+//            File file2 = new File(uriArrayList.get(index).getPath());
+//            RequestBody surveyBody = RequestBody.create(MediaType.parse("image/*"), file2);
+//            multipartTypedOutput[index] = MultipartBody.Part.createFormData("imageFiles[]", file2.getPath(), surveyBody);
+//        }
 
-        for (int index = 0; index < uriArrayList.size(); index++) {
-            File file2 = new File(uriArrayList.get(index).getPath());
-            RequestBody surveyBody = RequestBody.create(MediaType.parse("image/*"), file2);
-            multipartTypedOutput[index] = MultipartBody.Part.createFormData("imageFiles[]", file2.getPath(), surveyBody);
-        }
-
-     //   MultipartBody.Part imagePart = MultipartBody.Part.createFormData("profileImage", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-        Call<ResponseBody> call = client.updateStatus(multipartTypedOutput,taskId, userId);
+        Call<ResponseTaskDTO<Object>> call = client.updateStatus(taskId, userId);
+        call.enqueue(cb);
     }
 }
