@@ -18,4 +18,10 @@
 
     <color name="colorHint">#52afaa</color>
     <color name="colorText">#6bfff7</color>
+
+
+
+
+    <color name="active_case_bg">#CCFFFFFF</color>
+    <color name="main_bg">#3b5766</color>
 </resources>

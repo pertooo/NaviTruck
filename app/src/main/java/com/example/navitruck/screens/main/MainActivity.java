@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
 
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
-            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelId = getString(R.string.default_notification_channel_id);
             String channelName = getString(R.string.default_notification_channel_name);
             NotificationManager notificationManager =
                     getSystemService(NotificationManager.class);
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void ActivityAdapter(){
+    private void ActivityAdapter() {
         ArrayList<ActivityDTO> arrayList = new ArrayList<>();
         arrayList.add(new ActivityDTO("Route Staretd", "21/07 12:25"));
         arrayList.add(new ActivityDTO("changed status to routing", "23/07 21:29"));
@@ -144,10 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void MyStatAdapter(){
+    private void MyStatAdapter() {
         ArrayList<MyStatDTO> arrayList = new ArrayList<>();
         arrayList.add(new MyStatDTO("Amount", 450, 3300, 10650, MyStatDTO.UnitType.Dollar));
         arrayList.add(new MyStatDTO("Distance", 1300, 7840, 19654, MyStatDTO.UnitType.Mile));
+
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+//        gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); // set Horizontal Orientation
 
 
         mystatRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -156,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initViews(){
+    private void initViews() {
         activityRecyclerView = findViewById(R.id.activity_recyclerview);
         mystatRecyclerView = findViewById(R.id.my_stat_recyclerview);
 
@@ -165,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
+
 
         openActiveTaskBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, ActiveTaskFragment.class);
@@ -174,15 +180,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setAdapter(){
+    private void setAdapter() {
         ActivityAdapter();
         MyStatAdapter();
     }
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if(keyCode==KeyEvent.KEYCODE_BACK){
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             return false;
         }
         return true;

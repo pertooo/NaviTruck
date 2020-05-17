@@ -35,12 +35,12 @@
             android:id="@+id/imageBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/photos" />
+            android:background="@drawable/ic_photos" />
 
         <ImageView
             android:id="@+id/checkedImageImg"
-            android:layout_width="15dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="15dp"
             android:src="@drawable/checked"
             android:visibility="gone"
@@ -63,8 +63,8 @@
 
         <ImageView
             android:id="@+id/checkedNoteImg"
-            android:layout_width="15dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="15dp"
             android:src="@drawable/checked"
             android:visibility="gone"

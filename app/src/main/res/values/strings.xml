@@ -3,7 +3,6 @@
     <string name="default_notification_channel_name" translatable="true">Weather</string>
 
 
-
     <string name="app_name">NaviTruck</string>
     <string name="action_settings">Settings</string>
 
@@ -25,16 +24,14 @@
     <string name="accept">Accept</string>
 
 
-//Keys Start
+    //Keys Start
     <string name="token" translatable="false">token</string>
     <string name="logged_in" translatable="false">logged_in</string>
     <string name="logged_user" translatable="false">logged_user</string>
     <string name="logged_pass" translatable="false">logged_pass</string>
     <string name="new_task_received" translatable="false">new_task_received</string>
     <string name="last_task_seen" translatable="false">last_task_seen</string>
-//Keys End
-
-
+    //Keys End
 
 
     <string name="truck_status_title">Select Status</string>

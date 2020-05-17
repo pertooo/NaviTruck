@@ -71,5 +71,4 @@ dependencies {
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
 
-
 }

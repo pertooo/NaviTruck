@@ -36,6 +36,8 @@ public class MyStatsRecyclerAdapter extends RecyclerView.Adapter<MyStatsRecycler
 
 
 
+
+
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(MyStatsRecyclerViewholder holder, int position) {

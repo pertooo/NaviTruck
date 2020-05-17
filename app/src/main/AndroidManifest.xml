@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.navitruck"
-    >
+    package="com.example.navitruck">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
-
-
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
-        tools:targetApi="n"
         android:usesCleartextTraffic="true"
-        >
+        tools:targetApi="n">
 
         <service
             android:name=".service.MyFirebaseMessagingService"
@@ -37,11 +32,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="notification_channel_id" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_launcher_background" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -56,28 +49,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".screens.update.UpdatedataFormActivity">
-        </activity>
-
-        <activity android:name=".screens.main.MainActivity">
-        </activity>
-
-        <activity android:name=".screens.task.active.ActiveTaskFragment">
-        </activity>
-
-        <activity android:name=".screens.main.ChartActivity">
-        </activity>
-
+        <activity android:name=".screens.update.UpdatedataFormActivity"></activity>
+        <activity android:name=".screens.main.MainActivity"></activity>
+        <activity android:name=".screens.task.active.ActiveTaskFragment"></activity>
+        <activity android:name=".screens.main.ChartActivity"></activity>
         <activity
             android:name=".screens.task.NotifyTaskReceived"
-            android:parentActivityName=".screens.main.MainActivity"
-            android:launchMode="singleTask"
-            android:noHistory = "true"
-            android:taskAffinity=""
             android:excludeFromRecents="true"
-            />
-
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:parentActivityName=".screens.main.MainActivity"
+            android:taskAffinity="" />
     </application>
 
 </manifest>
