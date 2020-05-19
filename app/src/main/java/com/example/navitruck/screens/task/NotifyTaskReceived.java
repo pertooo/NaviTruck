@@ -52,10 +52,14 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View view = getLayoutInflater().inflate(R.layout.fragment_new_task, null);
+
+        Bundle bundle = getIntent().getExtras();
+
         setContentView(view);
 
         getSupportActionBar().hide();
         initViews(view);
+        setVaues((Task) bundle.getSerializable("task"));
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
@@ -78,6 +82,8 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
         sharedPref = getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        //TODO FOR MARI
+
         submitBtn = view.findViewById(R.id.accept_button);
         closeBtn = view.findViewById(R.id.close);
         plusBtn = view.findViewById(R.id.plus_button);
@@ -86,6 +92,11 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
         progress = new CircularProgressBarFragment();
     }
 
+    private void setVaues(Task task){
+        //TODO FOR MARI
+
+
+    }
     private void setListeners(){
         closeBtn.setOnClickListener(view -> {
 

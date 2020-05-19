@@ -25,7 +25,10 @@
         android:angle="0"
         android:endColor="#f2f0e9"
         android:startColor="#fcf9ed"
-        android:type="radial" />
+        android:type="radial"
+        android:gradientRadius="2dp"
+
+        />
 
 
 </shape>
