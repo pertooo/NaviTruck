@@ -53,17 +53,15 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
         super.onCreate(savedInstanceState);
         final View view = getLayoutInflater().inflate(R.layout.fragment_new_task, null);
 
-        Bundle bundle = getIntent().getExtras();
-
         setContentView(view);
 
         getSupportActionBar().hide();
         initViews(view);
-        setVaues((Task) bundle.getSerializable("task"));
-
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             Task task = (Task) bundle.getSerializable("task");
+            setVaues(task);
+
         }
 
         setListeners();
