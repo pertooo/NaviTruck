@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Task implements Serializable {
 
+    private long id;
+
     private String pickUpDate;
     private String deliveryDate;
     private String pickUpAt;
@@ -14,15 +16,24 @@ public class Task implements Serializable {
     private int weight;
     private String dims;
 
-    public Task(String pickUpDate, String deliveryDate, String pickUpAt, String deliveryTo, int miles, int pieces, int weight, String dims) {
-        this.pickUpDate = pickUpDate;
-        this.deliveryDate = deliveryDate;
+    public Task(long id, String pickUpDate, String deliveryDate, String pickUpAt, String deliveryTo, int miles, int pieces, int weight, String dims) {
+        this.id = id;
+//        this.pickUpDate = pickUpDate;
+//        this.deliveryDate = deliveryDate;
         this.pickUpAt = pickUpAt;
         this.deliveryTo = deliveryTo;
         this.miles = miles;
         this.pieces = pieces;
         this.weight = weight;
         this.dims = dims;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getPickUpDate() {

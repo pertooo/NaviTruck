@@ -113,14 +113,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "Short lived task is done.");
         Task task = null;
         try{
-            task = new Task(dataObj.get("pickUpDateStr").toString()
-                    , dataObj.get("deliveryDateStr").toString()
-                    , dataObj.get("pickUpAt").toString()
-                    , dataObj.get("deliveryTo").toString()
-                    , Integer.parseInt(dataObj.get("miles").toString())
-                    , Integer.parseInt(dataObj.get("pieces").toString())
-                    , Integer.parseInt(dataObj.get("weight").toString())
-                    , dataObj.get("dims").toString());
+            task = new Task(Integer.parseInt(dataObj.get("ID").toString())
+                    , null//dataObj.get("pickUpDateStr").toString()
+                    , null//dataObj.get("deliveryDateStr").toString()
+                    , dataObj.get("Pick-up at").toString()
+                    , dataObj.get("Deliver to").toString()
+                    , Integer.parseInt(dataObj.get("Miles").toString())
+                    , Integer.parseInt(dataObj.get("Pieces").toString())
+                    , Integer.parseInt(dataObj.get("Weight").toString())
+                    , dataObj.get("Dims").toString());
         }catch (JSONException e){
             e.printStackTrace();
         }

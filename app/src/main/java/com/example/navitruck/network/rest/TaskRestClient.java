@@ -73,7 +73,7 @@ public class TaskRestClient {
 
     public void accept(long taskId, long userId, double fee, Callback<ResponseTaskDTO<Object>> cb){
 
-        Call<ResponseTaskDTO<Object>> call = client.accept(taskId, userId, fee);
+        Call<ResponseTaskDTO<Object>> call = client.accept(taskId, userId, fee, true);
         call.enqueue(cb);
     }
 

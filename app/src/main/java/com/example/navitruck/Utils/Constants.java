@@ -2,7 +2,7 @@ package com.example.navitruck.Utils;
 
 public class Constants {
 
-    public static String API_BASE_URL = "http://172.20.10.3:8080"; //192.168.1.8
+    public static String API_BASE_URL = "http://192.168.1.9:8080"; //172.20.10.3
     public static String HEADER_STRING = "Authorization";
 
     public static String SETTINGS = "mysettings";

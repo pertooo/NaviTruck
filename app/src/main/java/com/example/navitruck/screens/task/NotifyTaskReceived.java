@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,8 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
     private Button plusBtn;
     private Button minusBtn;
 
+    private TextView taskIDView;
+
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
@@ -57,6 +60,7 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
 
         getSupportActionBar().hide();
         initViews(view);
+
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             Task task = (Task) bundle.getSerializable("task");
@@ -82,6 +86,8 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
 
         //TODO FOR MARI
 
+        taskIDView = view.findViewById(R.id.taskID);
+
         submitBtn = view.findViewById(R.id.accept_button);
         closeBtn = view.findViewById(R.id.close);
         plusBtn = view.findViewById(R.id.plus_button);
@@ -93,6 +99,7 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
     private void setVaues(Task task){
         //TODO FOR MARI
 
+        taskIDView.setText(task.getId()+"");
 
     }
     private void setListeners(){
@@ -121,8 +128,12 @@ public class NotifyTaskReceived extends AppCompatActivity implements TaskAcceptC
 
         submitBtn.setOnClickListener(view -> {
             startDialog();
+            int taskID = 0;
+            if(taskIDView.getText()!=null)
+                 taskID = Integer.parseInt(taskIDView.getText().toString());
+
             TaskRestClient client = new TaskRestClient(activity);
-            client.accept(7, 3, getSubmitPrice(), this);
+            client.accept(taskID, 121, getSubmitPrice(), this);
 
         });
 

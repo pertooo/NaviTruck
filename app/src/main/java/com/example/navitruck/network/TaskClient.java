@@ -22,11 +22,12 @@ import retrofit2.http.Query;
 
 public interface TaskClient {
 
-    @POST("/task/accept")
+    @POST("/cargo_truck_user/accept")
     Call<ResponseTaskDTO<Object>> accept(
-            @Query("taskId") long taskId,
+            @Query("cargoId") long cargoId,
             @Query("userId") long userId,
-            @Query("fee") double fee
+            @Query("offer") double offer,
+            @Query("accepted") boolean accepted
     );
 
 //    @Multipart
